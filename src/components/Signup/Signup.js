@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 
 export class Signup extends Component {
-    state({
-        
-    })
 
 
 

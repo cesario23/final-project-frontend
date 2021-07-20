@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import "./Nav.css"
-import {Link, NavLink} from 'react-router-dom'
+import { NavLink} from 'react-router-dom'
 export class Nav extends Component {
     render() {
         return (
             <nav>
             <div className="header">
             <h1>
-                <Link activeStile={{fontSize: '15px'}} to="/">Home</Link>
+                <NavLink activeStile={{fontSize: '40px'}} to="/">Home</NavLink>
             </h1>
+            </div>
             <div className="right-side-list">
                 <ul>
                     <li>
@@ -18,8 +19,6 @@ export class Nav extends Component {
                      <NavLink activeStyle={{borderButton: "1px solid white"}} to="/login">Login</NavLink>
                     </li>
                 </ul>
-            </div>
-                
             </div>
             </nav>
         )
