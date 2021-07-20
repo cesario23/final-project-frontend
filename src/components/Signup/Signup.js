@@ -1,7 +1,22 @@
 import React, { Component } from 'react'
+import "./Signup.css"
 
 export class Signup extends Component {
+state = {
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    firstNameError: "",
+    lastNameError: "",
+    usernameError: "",
+    emailError: "",
+    passwordError: "",
+    confirmPasswordError: "",
 
+}
 
 
     handleOnChange = (event) => {
@@ -13,9 +28,30 @@ export class Signup extends Component {
     handleOnSubmit = async (event)=>{
         event.preventDefault();
 
-        } 
+    }
+    handleOnBlur = (event) =>{
+     if(this.state[event.target.name].length === 0){
+         this.setState ({
+             [`${event.target.name}Error`]: `${event.target.placeholder} you cannot leave a space blank`
+         })
+     }   
+    }
 
     render() {
+        const {
+            firstName,
+            lastName,
+            username,
+            email,
+            password,
+            confirmPassword,
+            firstNameError,
+            lastNameError,
+            usernameError,
+            passwordError,
+            emailError,
+            confirmPasswordError,
+        } = this.state;
         return (
             <div className="container">
                 <div className="title">Sing up form</div>
@@ -23,25 +59,85 @@ export class Signup extends Component {
                     <form className ="form" onSubmit={this.handleOnSubmit}>
                         <div className="row">
                             <label htmlFor="firstName">First Name</label>
-                            <input></input>
+                            <input
+                            type="text"
+                            name= "firstName"
+                            value={firstName}
+                            id="firstName"
+                            placeholder= "first Name"
+                            onBlur={this.handleOnBlur}
+                            />
+                            <div className="errorMessage">
+                            {firstNameError && firstNameError}
+                            </div>
                             <label htmlFor="lastName">Last Name</label>
-                            <input></input>
+                            <input
+                            type="text"
+                            value={lastName}
+                            name="lastName"
+                            id="lastName"
+                            placeholder="last Name"
+                            onBlur= {this.handleOnBlur}
+                            />
+                            <div className="errorMessage">
+                                {lastNameError && lastNameError}
+                            </div>
                         </div>
                         <div className="email">
                             <label htmlFor="email">email</label>
-                            <input></input>
+                            <input 
+                            type="text"
+                            value={email}
+                            name="email"
+                            id="email"
+                            placeholder="email"
+                            onBlur= {this.handleOnBlur}
+                            />
+                            <div className="errorMessage">
+                                {emailError && emailError}
+                            </div>
                         </div>
                         <div className="row">
                             <label htmlFor="username">username</label>
-                            <input></input>
+                            <input
+                            type="text"
+                            value={username}
+                            name="username"
+                            id="username"
+                            placeholder="username"
+                            onBlur={this.handleOnBlur}
+                            />
+                            <div className="errorMessage">
+                                {usernameError && usernameError}
+                            </div>
                         </div>
                         <div className="row">
                             <label htmlFor="password">password</label>
-                            <input></input>
+                            <input 
+                            type="text"
+                            value={password}
+                            name="password"
+                            id="password"
+                            placeholder="password"
+                            onBlur={this.handleOnBlur}
+                            />
+                            <div className="errorMessage">
+                                {passwordError && passwordError}
+                            </div>
                         </div>
                         <div className="row">
-                            <label htmlFor="comfirmpasswor">comfirmpasswor</label>
-                            <input></input>
+                            <label htmlFor="confirmpassword">confirm password</label>
+                            <input
+                            type="text"
+                            value={confirmPassword}
+                            name='confirmPassword'
+                            id="confirmPassword"
+                            placeholder='confirmPassword'
+                            onBlur={this.handleOnBlur}
+                            />
+                            <div className="errorMessage">
+                                {confirmPasswordError && confirmPasswordError}
+                            </div>
                         </div>
                     </form>
                 </div>
