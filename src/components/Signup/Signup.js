@@ -15,6 +15,12 @@ state = {
     emailError: "",
     passwordError: "",
     confirmPasswordError: "",
+    firstNameOnFocus: false,
+    lastNameOnFocus: false,
+    emailOnFocus: false,
+    usernameOnFocus: false,
+    passwordOnFocus: false,
+    confirmPasswordOnFocus: false,
 
 }
 
@@ -35,7 +41,14 @@ state = {
              [`${event.target.name}Error`]: `${event.target.placeholder} you cannot leave a space blank`
          })
      }   
-    }
+    };
+    handleOnFocus = (event) =>{
+       if(!this.state[`${event.target.name}OnFocus`]){
+           this.setState({
+               [`${event.target.name}OnFocus`]: true,
+           })
+       } 
+    };
 
     render() {
         const {
@@ -66,6 +79,7 @@ state = {
                             id="firstName"
                             placeholder= "first Name"
                             onBlur={this.handleOnBlur}
+                            onFocus={this.handleOnFocus}
                             />
                             <div className="errorMessage">
                             {firstNameError && firstNameError}
@@ -78,6 +92,7 @@ state = {
                             id="lastName"
                             placeholder="last Name"
                             onBlur= {this.handleOnBlur}
+                            onFocus={this.handleOnFocus}
                             />
                             <div className="errorMessage">
                                 {lastNameError && lastNameError}
@@ -92,6 +107,7 @@ state = {
                             id="email"
                             placeholder="email"
                             onBlur= {this.handleOnBlur}
+                            onFocus={this.handleOnFocus}
                             />
                             <div className="errorMessage">
                                 {emailError && emailError}
@@ -106,6 +122,7 @@ state = {
                             id="username"
                             placeholder="username"
                             onBlur={this.handleOnBlur}
+                            onFocus={this.handleOnFocus}
                             />
                             <div className="errorMessage">
                                 {usernameError && usernameError}
@@ -120,6 +137,7 @@ state = {
                             id="password"
                             placeholder="password"
                             onBlur={this.handleOnBlur}
+                            onFocus={this.handleOnFocus}
                             />
                             <div className="errorMessage">
                                 {passwordError && passwordError}
@@ -134,11 +152,13 @@ state = {
                             id="confirmPassword"
                             placeholder='confirmPassword'
                             onBlur={this.handleOnBlur}
+                            onFocus={this.handleOnFocus}
                             />
                             <div className="errorMessage">
                                 {confirmPasswordError && confirmPasswordError}
                             </div>
                         </div>
+                        <button className="submit">Submit</button>
                     </form>
                 </div>
                 
