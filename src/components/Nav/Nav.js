@@ -7,16 +7,16 @@ export class Nav extends Component {
             <nav>
             <div className="header">
             <h1>
-                <NavLink activeStile={{fontSize: '40px'}} to="/">Home</NavLink>
+                <NavLink activeStile={{borderBottom: "1px solid white"}} to="/">Home</NavLink>
             </h1>
             </div>
             <div className="right-side-list">
                 <ul>
                     <li>
-                      <NavLink activeStyle= {{borderButton: "1px solid white"}} to="/sign-up">Signup</NavLink>
+                      <NavLink activeStyle= {{borderBottom: "1px solid white"}} to="/sign-up">Signup</NavLink>
                     </li>
                     <li>
-                     <NavLink activeStyle={{borderButton: "1px solid white"}} to="/login">Login</NavLink>
+                     <NavLink activeStyle={{borderBottom: "1px solid white"}} to="/login">Login</NavLink>
                     </li>
                 </ul>
             </div>

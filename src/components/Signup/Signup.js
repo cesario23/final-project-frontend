@@ -16,40 +16,15 @@ state = {
     emailError: "",
     passwordError: "",
     confirmPasswordError: "",
-    isButtonDisabled: true,
     firstNameOnFocus: false,
     lastNameOnFocus: false,
     usernameOnFocus: false,
     emailOnFocus: false,
     passwordOnFocus:false,
     confirmPasswordOnFocus: false,
+    isButtonDisabled: true,
 
 };
-
-    componentDidUpdate(prevProps, prevState) {
-        if(
-            this.state.firstNameOnFocus &&
-            this.state.lastNameOnFocus &&
-            this.state.usernameOnFocus &&
-            this.state.emailOnFocus &&
-            this.state.passwordOnFocus &&
-            this.state.confirmPasswordOnFocus
-
-        ){
-        if(
-            this.state.firstNameError.length === 0 &&
-            this.state.lastNameError.length === 0 &&
-            this.state.usernameError.length === 0 &&
-            this.state.emailError.length === 0 &&
-            this.state.passwordError.length === 0 &&
-            this.state.confirmPasswordError.length === 0 
-        ){
-            this.setState({
-               isButtonDisabled: false, 
-            })
-        }
-    }
-    }
 
     handleOnChange = (event) => {
         this.setState ({
@@ -198,6 +173,34 @@ state = {
          })
      }
     };
+
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.isButtonDisabled === true){
+        if(
+            this.state.firstNameOnFocus &&
+            this.state.lastNameOnFocus &&
+            this.state.usernameOnFocus &&
+            this.state.emailOnFocus &&
+            this.state.passwordOnFocus &&
+            this.state.confirmPasswordOnFocus
+
+        ){
+        if(
+            this.state.firstNameError.length === 0 &&
+            this.state.lastNameError.length === 0 &&
+            this.state.usernameError.length === 0 &&
+            this.state.emailError.length === 0 &&
+            this.state.passwordError.length === 0 &&
+            this.state.confirmPasswordError.length === 0 &&
+            this.state.password === this.state.confirmPassword
+        ) {
+            this.setState({
+               isButtonDisabled: false, 
+            })
+        }
+    }
+   }
+};
 
     render() {
         const {
