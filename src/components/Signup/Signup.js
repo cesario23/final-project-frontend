@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {isAlpha, isAlphanumeric, isEmail, isStrongPassword } from 'validator'
 import "./Signup.css"
 
 export class Signup extends Component {
@@ -15,21 +16,168 @@ state = {
     emailError: "",
     passwordError: "",
     confirmPasswordError: "",
+    isButtonDisabled: true,
     firstNameOnFocus: false,
     lastNameOnFocus: false,
-    emailOnFocus: false,
     usernameOnFocus: false,
-    passwordOnFocus: false,
+    emailOnFocus: false,
+    passwordOnFocus:false,
     confirmPasswordOnFocus: false,
 
-}
+};
 
+    componentDidUpdate(prevProps, prevState) {
+        if(
+            this.state.firstNameOnFocus &&
+            this.state.lastNameOnFocus &&
+            this.state.usernameOnFocus &&
+            this.state.emailOnFocus &&
+            this.state.passwordOnFocus &&
+            this.state.confirmPasswordOnFocus
+
+        ){
+        if(
+            this.state.firstNameError.length === 0 &&
+            this.state.lastNameError.length === 0 &&
+            this.state.usernameError.length === 0 &&
+            this.state.emailError.length === 0 &&
+            this.state.passwordError.length === 0 &&
+            this.state.confirmPasswordError.length === 0 
+        ){
+            this.setState({
+               isButtonDisabled: false, 
+            })
+        }
+    }
+    }
 
     handleOnChange = (event) => {
         this.setState ({
             [event.target.name]: event.target.value,
-        })
-    }
+        },
+        () => {
+            if(event.target.name === "firstName" ||
+               event.target.name === "lastName"){
+                   this.handleFirstNameAndLastNameInput (event);
+               }
+            if(event.target.name === "email"){
+                this.handleEmail();
+            }  
+            if(event.target.name === "password"){
+                this.handlePassword();
+            }
+            if(event.target.name === "confirmPassword"){
+                this.handleConfirmPassword ();
+            }
+        }
+        )
+    };
+
+    handlePassword = () => {
+        if(this.state.confirmPasswordOnFocus){
+            if(this.state.password !== this.state.confirmPassword){
+                this.setState({
+                confirmPasswordError: "Password does not match",
+                isButtonDisabled: true,
+                })
+            }else {
+                this.setState({
+                    confirmPasswordError: "",
+                })
+            }
+        }
+        if(this.state.password.length > 0){
+            if(isStrongPassword(this.state.password)){
+                this.setState({
+                    passwordError: "",
+                })
+            }else {
+                this.setState({
+                    passwordError: "Password does not meet complexity requirements ",
+                    isButtonDisabled: true,
+                })
+            }
+        }else {
+            this.setState({
+                passwordError: "Password cannot be empty",
+                isButtonDisabled: true,
+            })
+        }
+    };
+
+    handleConfirmPassword = ()=>{
+        if(this.state.password !== this.state.confirmPassword){
+            this.setState({
+                confirmPasswordError: "Password does not match!"
+            })
+        }else{
+            this.setState({
+                confirmPasswordError: "",
+                isButtonDisabled: false,
+            })
+        }
+    };
+
+    handleEmail = ()=>{
+        if(this.state.email.length > 0){
+            if(isEmail(this.state.email)){
+                this.setState({
+                    emailError: ""
+            })
+        }else {
+            this.setState({
+                emailError: "Please, enter a valid email!",
+                isButtonDisabled: true,
+            })
+        }
+        }else{
+            this.setState({
+                emailError:"Email cannot be empty",
+                isButtonDisabled: true,
+            })
+        }
+    };
+
+    handleUsername = () => {
+        if(this.state.username > 0){
+            if(isAlphanumeric(this.state.username)){
+                this.setState({
+                    usernameError: ""
+                })
+            }else{
+                this.setState({
+                    usernameError: "username can only have alphabet and numbers",
+                    isButtonDisabled: true,
+                })
+            }
+        }else{
+            this.setState({
+                usernameError: "username cannot be empty",
+                isButtonDisabled: true,
+            })
+        }
+    };
+
+    handleFirstNameAndLastNameInput = (event) => {
+        if(this.state[event.target.name].length > 0){
+            if(isAlpha(this.state[event.target.name])){
+                this.setState({
+                 [`${event.target.name}Error`]: "",
+                 isButtonDisabled: false,
+                })
+            }else{
+                this.setState({
+                [`${event.target.name}Error`]: `${event.target.placeholder} can only use letters`,
+                isButtonDisabled: true,
+                })
+            }
+        }else{
+            this.setState({
+                [`${event.target.name}Error`]: `${event.target.placeholder} cannot be empty`,
+                isButtonDisabled: true,
+            })
+        }
+    };
 
     handleOnSubmit = async (event)=>{
         event.preventDefault();
@@ -38,16 +186,17 @@ state = {
     handleOnBlur = (event) =>{
      if(this.state[event.target.name].length === 0){
          this.setState ({
-             [`${event.target.name}Error`]: `${event.target.placeholder} you cannot leave a space blank`
+             [`${event.target.name}Error`]: `${event.target.placeholder} you cannot leave a space blank`,
+             isButtonDisabled: true,
          })
      }   
     };
     handleOnFocus = (event) =>{
-       if(!this.state[`${event.target.name}OnFocus`]){
-           this.setState({
-               [`${event.target.name}OnFocus`]: true,
-           })
-       } 
+     if(!this.state[`${event.target.name}OnFocus`]){
+         this.setState({
+             [`${event.target.name}OnFocus`]: true,
+         })
+     }
     };
 
     render() {
@@ -78,6 +227,7 @@ state = {
                             value={firstName}
                             id="firstName"
                             placeholder= "first Name"
+                            onChange= {this.handleOnChange}
                             onBlur={this.handleOnBlur}
                             onFocus={this.handleOnFocus}
                             />
@@ -91,6 +241,7 @@ state = {
                             name="lastName"
                             id="lastName"
                             placeholder="last Name"
+                            onChange= {this.handleOnChange}
                             onBlur= {this.handleOnBlur}
                             onFocus={this.handleOnFocus}
                             />
@@ -106,6 +257,7 @@ state = {
                             name="email"
                             id="email"
                             placeholder="email"
+                            onChange= {this.handleOnChange}
                             onBlur= {this.handleOnBlur}
                             onFocus={this.handleOnFocus}
                             />
@@ -121,8 +273,9 @@ state = {
                             name="username"
                             id="username"
                             placeholder="username"
+                            onChange= {this.handleOnChange}
                             onBlur={this.handleOnBlur}
-                            onFocus={this.handleOnFocus}
+                            onFocus={this.handleOnFocus}                         
                             />
                             <div className="errorMessage">
                                 {usernameError && usernameError}
@@ -136,6 +289,7 @@ state = {
                             name="password"
                             id="password"
                             placeholder="password"
+                            onChange={this.handleOnChange}
                             onBlur={this.handleOnBlur}
                             onFocus={this.handleOnFocus}
                             />
@@ -151,6 +305,7 @@ state = {
                             name='confirmPassword'
                             id="confirmPassword"
                             placeholder='confirmPassword'
+                            onChange={this.handleOnChange}
                             onBlur={this.handleOnBlur}
                             onFocus={this.handleOnFocus}
                             />
@@ -158,7 +313,7 @@ state = {
                                 {confirmPasswordError && confirmPasswordError}
                             </div>
                         </div>
-                        <button className="submit">Submit</button>
+                        <button type="submit" disabled={this.state.isButtonDisabled}>Submit</button>
                     </form>
                 </div>
                 
