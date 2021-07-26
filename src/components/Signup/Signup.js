@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Axios from '../Utils/Axios'
 import {isAlpha, isAlphanumeric, isEmail, isStrongPassword } from 'validator'
 import "./Signup.css"
 
@@ -156,7 +157,19 @@ state = {
 
     handleOnSubmit = async (event)=>{
         event.preventDefault();
-
+       try{
+          let userObj ={
+              firstName: this.state.firstName,
+              lastName: this.state.lastName,
+              username: this.state.username,
+              email: this.state.email,
+              password: this.state.password,
+          }
+          let success = await Axios.post("/api/user/sign-up", userObj)
+          console.log(success);
+       }catch (e){
+        console.log(e)
+       }
     }
     handleOnBlur = (event) =>{
      if(this.state[event.target.name].length === 0){

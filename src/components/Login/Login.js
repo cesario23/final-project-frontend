@@ -13,6 +13,17 @@ export class Login extends Component {
         this.setState ({
             [event.target.name]: event.target.value,
         })
+        if(event.target.name === "username"){
+            if(this.state.email.length === 0){
+                this.setState ({
+                    usernameError: "username can not be empty"
+                });
+            }else{
+                this.setState({
+                    usernameError: ""
+                })
+            }
+        };
     };
     handleOnSubmit= (event) =>{
         event.preventDefault();

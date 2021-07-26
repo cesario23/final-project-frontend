@@ -4,7 +4,7 @@ nav {
     display: flex;
 }
 .header {
-    width: 70%;
+    width: 40%;
     text-decoration: none;
     font-size: 20px;
     color: white;
@@ -25,6 +25,23 @@ nav {
     display: flex;
     justify-content: space-around;
 }
-.rigth-side-list ul li{
+.right-side-list ul li{
     text-decoration: none;
+}
+.search-box {
+    width: 30%;
+    display: flex;
+    align-items: center;
+}
+#search {
+    width: 250px;
+    height: 40px;
+}
+.button {
+    width: 40px;
+    height: 40px;
+}
+img{
+    width: 40px;
+    height: 40px;
 }
