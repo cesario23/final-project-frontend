@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export class Home extends Component {
     async componentDidMount () {
         try{
-
+        
         }catch (e){
         console.log(e)
         }

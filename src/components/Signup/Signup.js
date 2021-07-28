@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Axios from '../Utils/Axios'
-import {isAlpha, isAlphanumeric, isEmail, isStrongPassword } from 'validator'
+import {isAlpha, isAlphanumeric, isEmail, isStrongPassword } from 'validator';
+import { toast } from 'react-toastify'
 import "./Signup.css"
 
 export class Signup extends Component {
@@ -165,10 +166,28 @@ state = {
               email: this.state.email,
               password: this.state.password,
           }
-          let success = await Axios.post("/api/user/sign-up", userObj)
+          let success = await Axios.post("/api/user/sign-up", userObj);
           console.log(success);
+          toast.success(`User created - Please login` , {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+          });
+
        }catch (e){
-        console.log(e)
+        toast.error(`${e.response.data.message}` , {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeONClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+       });
        }
     }
     handleOnBlur = (event) =>{
